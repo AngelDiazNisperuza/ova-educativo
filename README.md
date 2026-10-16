@@ -1,37 +1,34 @@
-# OVA Educativo
+# Word Explorers — OVA de inglés para tercer grado
 
-Repositorio base para el futuro desarrollo de un **Objeto Virtual de Aprendizaje (OVA)**.
+Objeto Virtual de Aprendizaje (OVA) de **vocabulario básico en inglés para 3.º de primaria**.
 
-> **Estado:** estructura inicial organizada. No se han desarrollado contenidos, actividades ni evaluaciones.
+## Objetivo de aprendizaje
+Reconocer y relacionar 18 palabras frecuentes en inglés con sus significados en español y representaciones visuales, mediante actividades de exploración y una evaluación formativa gamificada.
 
-## Organización de carpetas
+## Secuencia pedagógica
+1. **Aprender:** 18 tarjetas de vocabulario agrupadas en escuela (6), animales (6) y alimentos (6). Pronunciación opcional por síntesis de voz del navegador.
+2. **Jugar:** 12 preguntas de selección múltiple, distribuidas equitativamente entre los tres temas; cada pregunta ofrece cuatro opciones y realimentación inmediata.
+3. **Evaluar:** 10 puntos por acierto; máximo 120 puntos; resultado en porcentaje y niveles orientativos (10-12 excelente, 7-9 en progreso, 0-6 requiere refuerzo).
+4. **Exportar:** botón para generar un **PDF A4 de dos páginas**, con nombre, grupo, fecha, código, puntuación, resultados por tema, respuesta elegida, respuesta correcta y observación de desempeño.
 
-| Carpeta | Propósito |
-| --- | --- |
-| `contenidos/` | Unidades, lecciones y materiales didácticos. |
-| `actividades/` | Actividades de aprendizaje e interacciones. |
-| `evaluaciones/` | Instrumentos de evaluación y retroalimentación. |
-| `recursos/imagenes/` | Imágenes e ilustraciones con permiso de uso. |
-| `recursos/audios/` | Audios y narraciones. |
-| `recursos/videos/` | Videos y material audiovisual. |
-| `recursos/documentos/` | PDF y otros documentos de apoyo. |
-| `css/` | Hojas de estilo visual. |
-| `js/` | Programación de la interfaz y de las actividades. |
-| `datos/` | Datos estructurados, como bancos de preguntas o configuraciones. |
-| `documentacion/` | Guiones pedagógicos, objetivos y manuales del OVA. |
+## Ver y publicar
+Página principal: `index.html`. GitHub Pages utiliza `.github/workflows/static.yml` para desplegar el sitio sin proceso de compilación.
 
-## Archivos de base
+Sitio web: https://angeldiaznisperuza.github.io/ova-educativo/
 
-- `index.html`: página inicial de comprobación, sin contenido del OVA.
-- `css/estilos.css`: estilos iniciales.
-- `js/app.js`: archivo de programación preparado.
-- `.gitignore`: archivos que no deben subirse al repositorio.
+## Privacidad y comprobación docente
+- No hay backend, cuentas, base de datos ni recepción automática de resultados. **Los datos se guardan en localStorage**, en el navegador donde se juega.
+- Los resultados también se descargan en PDF sin depender de un proveedor externo. Cada estudiante debe entregar su documento al docente por el medio acordado.
+- El PDF es una constancia local, **no una certificación criptográfica** ni prueba a prueba de alteraciones.
+- El historial conserva hasta 40 partidas por navegador y permite descargar nuevamente los informes. Puede borrarse desde la interfaz.
+- El service worker almacena recursos principales para permitir el uso sin conexión **después de una visita inicial en línea**. La disponibilidad de voz dependerá del dispositivo y del navegador.
 
-## Próximos pasos
+## Estructura
+- `index.html`: navegación, contenidos, juego y resultados
+- `css/estilos.css`: diseño adaptable
+- `js/app.js`: banco de palabras, evaluación, almacenamiento y PDF
+- `sw.js`: almacenamiento de recursos para acceso sin conexión
+- `contenidos/`, `actividades/`, `evaluaciones/`, `recursos/`, `datos/`, `documentacion/`: carpetas reservadas para ampliaciones
 
-1. Definir el tema, nivel educativo, objetivos, usuarios y ruta didáctica del OVA.
-2. Desarrollar los contenidos, actividades, evaluaciones y recursos multimedia.
-3. Verificar accesibilidad, usabilidad y funcionamiento sin conexión cuando corresponda.
-4. Considerar la publicación con GitHub Pages cuando exista una primera versión funcional.
-
-**Nota:** este proyecto no necesita backend para mostrar contenidos estáticos. Funciones de registro centralizado, cuentas de estudiantes o calificaciones persistentes entre dispositivos requerirían servicios adicionales.
+## Control de calidad
+Verificar en escritorio y móvil: aprendizaje y audio, 12 preguntas, guardado de progreso, retroalimentación, cómputo de puntuación, descarga PDF, historial y acceso sin conexión después de una primera carga.

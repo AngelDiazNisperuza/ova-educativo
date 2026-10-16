@@ -1,17 +1,56 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Estructura inicial para un Objeto Virtual de Aprendizaje.">
-  <title>OVA Educativo | En preparación</title>
-  <link rel="stylesheet" href="css/estilos.css">
-  <script src="js/app.js" defer></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#18254d">
+<meta name="description" content="Juego de vocabulario en inglés para tercer grado. Aprende, juega y descarga tu evaluación en PDF.">
+<title>Word Explorers | Inglés 3.º</title>
+<link rel="stylesheet" href="./css/estilos.css"><script defer src="./js/app.js"></script>
 </head>
 <body>
-  <main class="contenedor">
-    <h1>OVA Educativo</h1>
-    <p>Estructura del proyecto preparada. Los contenidos se incorporarán en una próxima fase.</p>
-  </main>
-</body>
-</html>
+<a class="skip" href="#main">Ir al contenido</a>
+<header class="top"><div class="wrap topinner">
+<a href="#inicio" data-nav="inicio" class="brand"><span class="brandlogo">W<span>✦</span></span><strong>word<span>explorers</span><small>ENGLISH · GRADE 3</small></strong></a>
+<nav aria-label="Navegación"><button class="nav active" data-nav="inicio">Inicio</button><button class="nav" data-nav="aprender">Aprender</button><button class="nav" data-nav="jugar">Jugar</button><button class="nav" data-nav="historial">Resultados</button></nav>
+<span class="grade">✦ 3.er grado</span>
+</div></header>
+<main id="main">
+<section class="view active" id="inicio">
+<div class="hero"><div class="wrap hero-grid">
+<div class="hero-copy"><p class="eyebrow gold">✦ LET'S LEARN ENGLISH!</p><h1>¡Las palabras son <em>una aventura!</em></h1><p>Explora palabras nuevas en inglés, supera desafíos y descubre cuánto has aprendido. ¡Tu misión comienza aquí!</p>
+<div class="hero-actions"><button class="btn yellow" data-nav="aprender">Empezar a aprender ↗</button><button class="btn outlined" data-nav="jugar">Ir al juego →</button></div><div class="hero-facts"><span>✓ 18 palabras</span><span>✓ 12 desafíos</span><span>✓ Informe PDF</span></div></div>
+<div class="hero-art" aria-hidden="true"><span class="tag tag1">HELLO! 👋</span><div class="art-disc"><span class="book">📖</span><span class="pencil">✏️</span><i>✦</i></div><span class="tag tag2">WOW! ⭐</span></div>
+</div></div>
+<div class="wrap route"><div class="sectionhead"><p class="eyebrow">TU RUTA DE APRENDIZAJE</p><h2>Aprender es mejor <span>jugando.</span></h2><p>¡Sigue estos tres pasos y conviértete en explorador del inglés!</p></div>
+<div class="route-grid">
+<article class="route-card"><div class="route-icon lilac">📚</div><span class="num">01</span><h3>Explora</h3><p>Descubre palabras de la escuela, los animales y los alimentos.</p><button class="plain" data-nav="aprender">Ver palabras →</button></article>
+<article class="route-card"><div class="route-icon peach">🎮</div><span class="num">02</span><h3>Juega</h3><p>Responde 12 preguntas y gana estrellas por tus aciertos.</p><button class="plain" data-nav="jugar">Comenzar juego →</button></article>
+<article class="route-card"><div class="route-icon mint">🏆</div><span class="num">03</span><h3>Demuestra</h3><p>Conoce tus resultados y descarga tu informe en PDF.</p><button class="plain" data-nav="historial">Ver resultados →</button></article>
+</div></div>
+</section>
+<section class="view wrap interior" id="aprender">
+<div class="sectionhead left"><p class="eyebrow">STEP 01 · LEARN</p><h1>Mi álbum de <span>palabras</span> 📚</h1><p>Observa las imágenes, lee las palabras y escucha su pronunciación.</p></div>
+<div class="filters" role="group" aria-label="Temas"><button class="filter selected" data-filter="all" aria-pressed="true">✨ Todas</button><button class="filter" data-filter="school" aria-pressed="false">🎒 La escuela</button><button class="filter" data-filter="animals" aria-pressed="false">🐶 Animales</button><button class="filter" data-filter="food" aria-pressed="false">🍎 Alimentos</button></div>
+<div id="words-grid" class="words-grid"></div>
+<div class="cta"><div><p class="eyebrow">¿LISTO PARA EL RETO?</p><h2>¡Pon a prueba tus palabras!</h2><p>12 desafíos · Sin límite de tiempo</p></div><button class="btn yellow" data-nav="jugar">¡Quiero jugar! →</button></div>
+</section>
+<section class="view wrap interior" id="jugar">
+<div class="sectionhead left"><p class="eyebrow">STEP 02 · PLAY</p><h1>El reto de las <span>palabras</span> 🎮</h1><p>Selecciona la palabra correcta en inglés. ¡Cada acierto vale 10 puntos!</p></div>
+<div id="start-panel" class="start-layout"><div class="card form-card"><span class="pill">🎯 NUEVA MISIÓN</span><h2>¡Prepárate, explorador!</h2><p>Escribe tus datos para identificar tu evaluación y el informe en PDF.</p>
+<form id="student-form"><label for="student-name">Nombre y apellido *</label><input required minlength="2" maxlength="65" id="student-name" placeholder="Ej. María Pérez" autocomplete="name"><label for="student-group">Curso o grupo <small>(opcional)</small></label><input maxlength="35" id="student-group" placeholder="Ej. 3° A"><button class="btn purple wide" type="submit">¡Comenzar aventura! →</button></form>
+<button class="btn soft" id="resume-button" type="button" hidden>Continuar mi partida anterior ↗</button><p class="tiny">🔒 Tus datos quedan guardados únicamente en este navegador.</p></div>
+<aside class="rules"><div class="rules-emoji">🎒</div><h3>¿Cómo se juega?</h3><ol><li>Lee la palabra en español.</li><li>Elige una de las 4 opciones.</li><li>Revisa la respuesta y continúa.</li><li>Descarga tu informe al final.</li></ol><div class="rule-numbers"><strong>12</strong> preguntas <strong>120</strong> puntos</div></aside></div>
+<div id="question-panel" class="question-panel" hidden>
+<div class="statusline"><span id="level-name" class="pill">🎒 SCHOOL</span><strong id="question-counter">Pregunta 1 de 12</strong></div>
+<div class="progress" role="progressbar" id="question-progress" aria-label="Avance del juego" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0"><div id="progress-fill"></div></div>
+<div class="card question"><div id="question-emoji" class="question-emoji" aria-hidden="true"></div><p class="eyebrow">CHOOSE THE CORRECT WORD</p><h2 id="question-prompt"></h2><p>Elige una respuesta:</p><div id="options" class="options"></div><div id="feedback" class="feedback" aria-live="polite" hidden></div><button id="next-question" class="btn purple" type="button" hidden>Siguiente pregunta →</button></div><p class="under-question">💡 No hay límite de tiempo. ¡Piensa con calma!</p>
+</div>
+<div id="results-panel" class="card results" aria-live="polite" hidden></div>
+</section>
+<section class="view wrap interior" id="historial">
+<div class="sectionhead left"><p class="eyebrow">STEP 03 · RESULTS</p><h1>Resultados <span>guardados</span> 🏆</h1><p>Consulta tus partidas en este dispositivo y vuelve a descargar sus informes.</p></div>
+<div class="card history"><div class="history-heading"><h2>Historial de evaluaciones</h2><button class="btn soft small" id="clear-history">Borrar historial</button></div><div id="history-content"></div></div>
+<div class="notice"><strong>📋 Para el docente</strong><p>Los resultados se guardan solo en este navegador. Si el alumnado utiliza dispositivos diferentes, cada estudiante debe descargar y entregar su PDF por el medio acordado. No existe una recepción automática de informes.</p></div>
+</section>
+</main>
+<footer class="footer"><div class="wrap footerinner"><div><b>✦ word explorers</b><span>Un viaje para aprender inglés · 3.er grado</span></div><span>Aprende · Juega · Descubre</span></div></footer>
+</body></html>
