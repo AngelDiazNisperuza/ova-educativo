@@ -5,7 +5,7 @@
     {en:"pencil",es:"lápiz",emoji:"✏️",unit:"school"},
     {en:"book",es:"libro",emoji:"📚",unit:"school"},
     {en:"chair",es:"silla",emoji:"🪑",unit:"school"},
-    {en:"desk",es:"escritorio",emoji:"🪑",unit:"school"},
+    {en:"notebook",es:"cuaderno",emoji:"📓",unit:"school"},
     {en:"ruler",es:"regla",emoji:"📏",unit:"school"},
     {en:"backpack",es:"mochila",emoji:"🎒",unit:"school"},
     {en:"dog",es:"perro",emoji:"🐶",unit:"animals"},
