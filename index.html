@@ -17,31 +17,31 @@
 <section class="view active" id="inicio">
 <div class="hero"><div class="wrap hero-grid">
 <div class="hero-copy"><p class="eyebrow gold">✦ LET'S LEARN ENGLISH!</p><h1>¡Las palabras son <em>una aventura!</em></h1><p>Explora palabras nuevas en inglés, supera desafíos y descubre cuánto has aprendido. ¡Tu misión comienza aquí!</p>
-<div class="hero-actions"><button class="btn yellow" data-nav="aprender">Empezar a aprender ↗</button><button class="btn outlined" data-nav="jugar">Ir al juego →</button></div><div class="hero-facts"><span>✓ 18 palabras</span><span>✓ 12 desafíos</span><span>✓ Informe PDF</span></div></div>
+<div class="hero-actions"><button class="btn yellow" data-nav="aprender">Empezar a aprender ↗</button><button class="btn outlined" data-nav="jugar">Ir al juego →</button></div><div class="hero-facts"><span>✓ 40 palabras</span><span>✓ 10 desafíos por tema</span><span>✓ Informe PDF</span></div></div>
 <div class="hero-art" aria-hidden="true"><span class="tag tag1">HELLO! 👋</span><div class="art-disc"><span class="book">📖</span><span class="pencil">✏️</span><i>✦</i></div><span class="tag tag2">WOW! ⭐</span></div>
 </div></div>
 <div class="wrap route"><div class="sectionhead"><p class="eyebrow">TU RUTA DE APRENDIZAJE</p><h2>Aprender es mejor <span>jugando.</span></h2><p>¡Sigue estos tres pasos y conviértete en explorador del inglés!</p></div>
 <div class="route-grid">
-<article class="route-card"><div class="route-icon lilac">📚</div><span class="num">01</span><h3>Explora</h3><p>Descubre palabras de la escuela, los animales y los alimentos.</p><button class="plain" data-nav="aprender">Ver palabras →</button></article>
-<article class="route-card"><div class="route-icon peach">🎮</div><span class="num">02</span><h3>Juega</h3><p>Responde 12 preguntas y gana estrellas por tus aciertos.</p><button class="plain" data-nav="jugar">Comenzar juego →</button></article>
+<article class="route-card"><div class="route-icon lilac">📚</div><span class="num">01</span><h3>Explora</h3><p>Descubre palabras de la escuela, los animales, los alimentos y las matemáticas.</p><button class="plain" data-nav="aprender">Ver palabras →</button></article>
+<article class="route-card"><div class="route-icon peach">🎮</div><span class="num">02</span><h3>Juega</h3><p>Elige un tema y resuelve 10 preguntas de vocabulario.</p><button class="plain" data-nav="jugar">Comenzar juego →</button></article>
 <article class="route-card"><div class="route-icon mint">🏆</div><span class="num">03</span><h3>Demuestra</h3><p>Conoce tus resultados y descarga tu informe en PDF.</p><button class="plain" data-nav="historial">Ver resultados →</button></article>
 </div></div>
 </section>
 <section class="view wrap interior" id="aprender">
 <div class="sectionhead left"><p class="eyebrow">STEP 01 · LEARN</p><h1>Mi álbum de <span>palabras</span> 📚</h1><p>Observa las imágenes, lee las palabras y escucha su pronunciación.</p></div>
-<div class="filters" role="group" aria-label="Temas"><button class="filter selected" data-filter="all" aria-pressed="true">✨ Todas</button><button class="filter" data-filter="school" aria-pressed="false">🎒 La escuela</button><button class="filter" data-filter="animals" aria-pressed="false">🐶 Animales</button><button class="filter" data-filter="food" aria-pressed="false">🍎 Alimentos</button></div>
+<div class="filters" role="group" aria-label="Temas"><button class="filter selected" data-filter="all" aria-pressed="true">✨ Todas</button><button class="filter" data-filter="school" aria-pressed="false">🎒 La escuela</button><button class="filter" data-filter="animals" aria-pressed="false">🐶 Animales</button><button class="filter" data-filter="food" aria-pressed="false">🍎 Alimentos</button><button class="filter" data-filter="math" aria-pressed="false">➗ Matemáticas</button></div>
 <div id="words-grid" class="words-grid"></div>
-<div class="cta"><div><p class="eyebrow">¿LISTO PARA EL RETO?</p><h2>¡Pon a prueba tus palabras!</h2><p>12 desafíos · Sin límite de tiempo</p></div><button class="btn yellow" data-nav="jugar">¡Quiero jugar! →</button></div>
+<div class="cta"><div><p class="eyebrow">¿LISTO PARA EL RETO?</p><h2>¡Pon a prueba tus palabras!</h2><p>10 desafíos por tema · Sin límite de tiempo</p></div><button class="btn yellow" data-nav="jugar">¡Quiero jugar! →</button></div>
 </section>
 <section class="view wrap interior" id="jugar">
 <div class="sectionhead left"><p class="eyebrow">STEP 02 · PLAY</p><h1>El reto de las <span>palabras</span> 🎮</h1><p>Selecciona la palabra correcta en inglés. ¡Cada acierto vale 10 puntos!</p></div>
 <div id="start-panel" class="start-layout"><div class="card form-card"><span class="pill">🎯 NUEVA MISIÓN</span><h2>¡Prepárate, explorador!</h2><p>Escribe tus datos para identificar tu evaluación y el informe en PDF.</p>
-<form id="student-form"><label for="student-name">Nombre y apellido *</label><input required minlength="2" maxlength="65" id="student-name" placeholder="Ej. María Pérez" autocomplete="name"><label for="student-group">Curso o grupo <small>(opcional)</small></label><input maxlength="35" id="student-group" placeholder="Ej. 3° A"><button class="btn purple wide" type="submit">¡Comenzar aventura! →</button></form>
+<form id="student-form"><label for="student-name">Nombre y apellido *</label><input required minlength="2" maxlength="65" id="student-name" placeholder="Ej. María Pérez" autocomplete="name"><label for="student-group">Curso o grupo <small>(opcional)</small></label><input maxlength="35" id="student-group" placeholder="Ej. 3° A"><label for="game-topic">Tema del juego *</label><select id="game-topic" required><option value="math" selected>➗ Matemáticas</option><option value="school">🎒 La escuela</option><option value="animals">🐶 Animales</option><option value="food">🍎 Alimentos</option><option value="all">✨ Todos los temas</option></select><button class="btn purple wide" type="submit">¡Comenzar aventura! →</button></form>
 <button class="btn soft" id="resume-button" type="button" hidden>Continuar mi partida anterior ↗</button><p class="tiny">🔒 Tus datos quedan guardados únicamente en este navegador.</p></div>
-<aside class="rules"><div class="rules-emoji">🎒</div><h3>¿Cómo se juega?</h3><ol><li>Lee la palabra en español.</li><li>Elige una de las 4 opciones.</li><li>Revisa la respuesta y continúa.</li><li>Descarga tu informe al final.</li></ol><div class="rule-numbers"><strong>12</strong> preguntas <strong>120</strong> puntos</div></aside></div>
+<aside class="rules"><div class="rules-emoji">🎒</div><h3>¿Cómo se juega?</h3><ol><li>Lee la palabra en español.</li><li>Elige una de las 4 opciones.</li><li>Revisa la respuesta y continúa.</li><li>Descarga tu informe al final.</li></ol><div class="rule-numbers"><strong>10</strong> preguntas <strong>100</strong> puntos</div></aside></div>
 <div id="question-panel" class="question-panel" hidden>
-<div class="statusline"><span id="level-name" class="pill">🎒 SCHOOL</span><strong id="question-counter">Pregunta 1 de 12</strong></div>
-<div class="progress" role="progressbar" id="question-progress" aria-label="Avance del juego" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0"><div id="progress-fill"></div></div>
+<div class="statusline"><span id="level-name" class="pill">🎒 SCHOOL</span><strong id="question-counter">Pregunta 1 de 10</strong></div>
+<div class="progress" role="progressbar" id="question-progress" aria-label="Avance del juego" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><div id="progress-fill"></div></div>
 <div class="card question"><div id="question-emoji" class="question-emoji" aria-hidden="true"></div><p class="eyebrow">CHOOSE THE CORRECT WORD</p><h2 id="question-prompt"></h2><p>Elige una respuesta:</p><div id="options" class="options"></div><div id="feedback" class="feedback" aria-live="polite" hidden></div><button id="next-question" class="btn purple" type="button" hidden>Siguiente pregunta →</button></div><p class="under-question">💡 No hay límite de tiempo. ¡Piensa con calma!</p>
 </div>
 <div id="results-panel" class="card results" aria-live="polite" hidden></div>

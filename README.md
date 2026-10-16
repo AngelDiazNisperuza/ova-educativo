@@ -1,34 +1,31 @@
 # Word Explorers — OVA de inglés para tercer grado
 
-Objeto Virtual de Aprendizaje (OVA) de **vocabulario básico en inglés para 3.º de primaria**.
+OVA de vocabulario en inglés para primaria, alojado en GitHub Pages.
 
-## Objetivo de aprendizaje
-Reconocer y relacionar 18 palabras frecuentes en inglés con sus significados en español y representaciones visuales, mediante actividades de exploración y una evaluación formativa gamificada.
+## Temas (40 palabras)
+- **La escuela:** 10 palabras.
+- **Animales:** 10 palabras.
+- **Alimentos:** 10 palabras.
+- **Matemáticas (Math):** 10 palabras: number/número, add/sumar, subtract/restar, multiply/multiplicar, divide/dividir, equal/igual, circle/círculo, square/cuadrado, triangle/triángulo, rectangle/rectángulo.
 
-## Secuencia pedagógica
-1. **Aprender:** 18 tarjetas de vocabulario agrupadas en escuela (6), animales (6) y alimentos (6). Pronunciación opcional por síntesis de voz del navegador.
-2. **Jugar:** 12 preguntas de selección múltiple, distribuidas equitativamente entre los tres temas; cada pregunta ofrece cuatro opciones y realimentación inmediata.
-3. **Evaluar:** 10 puntos por acierto; máximo 120 puntos; resultado en porcentaje y niveles orientativos (10-12 excelente, 7-9 en progreso, 0-6 requiere refuerzo).
-4. **Exportar:** botón para generar un **PDF A4 de dos páginas**, con nombre, grupo, fecha, código, puntuación, resultados por tema, respuesta elegida, respuesta correcta y observación de desempeño.
+## Juego por temas y evaluación
+1. Ingresa nombre, grupo (opcional) y selecciona el tema antes de jugar; **Matemáticas** aparece por defecto.
+2. Cada partida presenta **exactamente 10 preguntas** de selección múltiple (4 opciones), con retroalimentación inmediata. Cada palabra aparece una vez por partida. La opción **Todos los temas** mezcla 10 preguntas repartidas entre los 4 temas.
+3. Calificación: **10 puntos por respuesta correcta; máximo 100 puntos**. Niveles orientativos: 8-10 aciertos (Excelente), 6-7 (En progreso), 0-5 (Requiere refuerzo).
+4. El **PDF A4 de dos páginas** incluye identificación del estudiante, tema evaluado, fecha, folio, aciertos, puntuación, desempeño por tema y detalle de respuestas.
+5. El historial local conserva hasta 40 evaluaciones; las anteriores de 12 preguntas mantienen su escala original y pueden volver a descargarse.
 
-## Ver y publicar
-Página principal: `index.html`. GitHub Pages utiliza `.github/workflows/static.yml` para desplegar el sitio sin proceso de compilación.
-
-Sitio web: https://angeldiaznisperuza.github.io/ova-educativo/
-
-## Privacidad y comprobación docente
-- No hay backend, cuentas, base de datos ni recepción automática de resultados. **Los datos se guardan en localStorage**, en el navegador donde se juega.
-- Los resultados también se descargan en PDF sin depender de un proveedor externo. Cada estudiante debe entregar su documento al docente por el medio acordado.
-- El PDF es una constancia local, **no una certificación criptográfica** ni prueba a prueba de alteraciones.
-- El historial conserva hasta 40 partidas por navegador y permite descargar nuevamente los informes. Puede borrarse desde la interfaz.
-- El service worker almacena recursos principales para permitir el uso sin conexión **después de una visita inicial en línea**. La disponibilidad de voz dependerá del dispositivo y del navegador.
+## Uso y privacidad
+- Sitio: https://angeldiaznisperuza.github.io/ova-educativo/
+- La información del estudiante y la evaluación permanecen en el almacenamiento del navegador (localStorage). El PDF se genera en el dispositivo y **el estudiante debe entregarlo al docente** por un canal definido; no existe recolección automática.
+- No se necesita backend para el juego ni para generar PDF. El service worker intenta permitir acceso sin conexión tras la primera visita.
+- La pronunciación de las tarjetas depende de las voces disponibles en el navegador.
+- El PDF es un registro informativo local, no una certificación inviolable.
 
 ## Estructura
-- `index.html`: navegación, contenidos, juego y resultados
-- `css/estilos.css`: diseño adaptable
-- `js/app.js`: banco de palabras, evaluación, almacenamiento y PDF
-- `sw.js`: almacenamiento de recursos para acceso sin conexión
-- `contenidos/`, `actividades/`, `evaluaciones/`, `recursos/`, `datos/`, `documentacion/`: carpetas reservadas para ampliaciones
-
-## Control de calidad
-Verificar en escritorio y móvil: aprendizaje y audio, 12 preguntas, guardado de progreso, retroalimentación, cómputo de puntuación, descarga PDF, historial y acceso sin conexión después de una primera carga.
+- `index.html`: navegación, selección de tema, preguntas y resultados.
+- `js/app.js`: 40 palabras, elaboración de cuestionarios, puntuación, historial y PDF.
+- `css/estilos.css`: diseño responsivo.
+- `sw.js`: caché del OVA para uso sin conexión.
+- `documentacion/guia-docente.md`: orientación pedagógica.
+- `.github/workflows/static.yml`: publicación en GitHub Pages.

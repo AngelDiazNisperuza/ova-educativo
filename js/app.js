@@ -8,23 +8,46 @@
     {en:"notebook",es:"cuaderno",emoji:"📓",unit:"school"},
     {en:"ruler",es:"regla",emoji:"📏",unit:"school"},
     {en:"backpack",es:"mochila",emoji:"🎒",unit:"school"},
+    {en:"eraser",es:"borrador",emoji:"🧽",unit:"school"},
+    {en:"scissors",es:"tijeras",emoji:"✂️",unit:"school"},
+    {en:"board",es:"tablero",emoji:"🟩",unit:"school"},
+    {en:"clock",es:"reloj",emoji:"🕒",unit:"school"},
     {en:"dog",es:"perro",emoji:"🐶",unit:"animals"},
     {en:"cat",es:"gato",emoji:"🐱",unit:"animals"},
     {en:"bird",es:"pájaro",emoji:"🐦",unit:"animals"},
     {en:"fish",es:"pez",emoji:"🐟",unit:"animals"},
     {en:"rabbit",es:"conejo",emoji:"🐰",unit:"animals"},
     {en:"horse",es:"caballo",emoji:"🐴",unit:"animals"},
+    {en:"cow",es:"vaca",emoji:"🐄",unit:"animals"},
+    {en:"duck",es:"pato",emoji:"🦆",unit:"animals"},
+    {en:"lion",es:"león",emoji:"🦁",unit:"animals"},
+    {en:"turtle",es:"tortuga",emoji:"🐢",unit:"animals"},
     {en:"apple",es:"manzana",emoji:"🍎",unit:"food"},
     {en:"banana",es:"banano",emoji:"🍌",unit:"food"},
     {en:"bread",es:"pan",emoji:"🍞",unit:"food"},
     {en:"milk",es:"leche",emoji:"🥛",unit:"food"},
     {en:"rice",es:"arroz",emoji:"🍚",unit:"food"},
-    {en:"water",es:"agua",emoji:"💧",unit:"food"}
+    {en:"water",es:"agua",emoji:"💧",unit:"food"},
+    {en:"egg",es:"huevo",emoji:"🥚",unit:"food"},
+    {en:"cheese",es:"queso",emoji:"🧀",unit:"food"},
+    {en:"orange",es:"naranja",emoji:"🍊",unit:"food"},
+    {en:"soup",es:"sopa",emoji:"🍲",unit:"food"},
+    {en:"number",es:"número",emoji:"🔢",unit:"math"},
+    {en:"add",es:"sumar",emoji:"➕",unit:"math"},
+    {en:"subtract",es:"restar",emoji:"➖",unit:"math"},
+    {en:"multiply",es:"multiplicar",emoji:"✖️",unit:"math"},
+    {en:"divide",es:"dividir",emoji:"➗",unit:"math"},
+    {en:"equal",es:"igual",emoji:"🟰",unit:"math"},
+    {en:"circle",es:"círculo",emoji:"🔵",unit:"math"},
+    {en:"square",es:"cuadrado",emoji:"🟪",unit:"math"},
+    {en:"triangle",es:"triángulo",emoji:"🔺",unit:"math"},
+    {en:"rectangle",es:"rectángulo",emoji:"▭",unit:"math"}
   ];
   const TOPICS = {
     school:{name:"La escuela",label:"🎒 SCHOOL"},
     animals:{name:"Animales",label:"🐶 ANIMALS"},
-    food:{name:"Alimentos",label:"🍎 FOOD"}
+    food:{name:"Alimentos",label:"🍎 FOOD"},
+    math:{name:"Matemáticas",label:"➗ MATH"}
   };
   const ACTIVE_KEY="word_explorers_active_v1",HISTORY_KEY="word_explorers_history_v1";
   const $=id=>document.getElementById(id);
@@ -56,17 +79,27 @@
       '<article class="word-card '+w.unit+'"><div class="word-art" aria-hidden="true">'+w.emoji+'</div><h3 lang="en">'+w.en+'</h3><p>'+w.es+'</p><button type="button" class="speak" data-say="'+w.en+'" aria-label="Escuchar '+w.en+'">🔊 Escuchar</button></article>'
     ).join("");
     document.querySelectorAll(".filter").forEach(b=>{b.classList.toggle("selected",b.dataset.filter===filter);b.setAttribute("aria-pressed",String(b.dataset.filter===filter));});
+    if(filter!=="all"&&TOPICS[filter])$("game-topic").value=filter;
   }
   function say(word){
     if(!("speechSynthesis" in window)){alert("La pronunciación no está disponible en este navegador. Puedes leer la palabra en pantalla.");return;}
     try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(word);u.lang="en-US";u.rate=.77;u.pitch=1;speechSynthesis.speak(u);}catch{alert("No fue posible reproducir la pronunciación.");}
   }
-  function newQuestions(){
-    const chosen=Object.keys(TOPICS).flatMap(unit=>randomItems(WORDS.filter(w=>w.unit===unit)).slice(0,4));
+  function newQuestions(topic="math"){
+    // Exactamente 10 palabras distintas por partida, seleccionadas según el tema.
+    const chosen=topic==="all"
+      ? randomItems(["school","animals","food","math"].flatMap((unit,i)=>randomItems(WORDS.filter(w=>w.unit===unit)).slice(0,i<2?3:2)))
+      : randomItems(WORDS.filter(w=>w.unit===topic)).slice(0,10);
     return randomItems(chosen).map(w=>({
       en:w.en,es:w.es,emoji:w.emoji,unit:w.unit,
       options:randomItems([w.en,...randomItems(WORDS.filter(x=>x.unit===w.unit&&x.en!==w.en)).slice(0,3).map(x=>x.en)])
     }));
+  }
+  function topicName(data){
+    if(data.topic==="all")return "Todos los temas";
+    if(data.topic&&TOPICS[data.topic])return TOPICS[data.topic].name;
+    const units=[...new Set((data.questions||[]).map(q=>q.unit))];
+    return units.length===1?(TOPICS[units[0]]?.name||"Inglés"):"Todos los temas";
   }
   function folio(){
     let suffix="";try{const a=new Uint8Array(4);crypto.getRandomValues(a);suffix=[...a].map(x=>x.toString(16).padStart(2,"0")).join("").toUpperCase();}catch{suffix=Math.random().toString(36).slice(2,10).toUpperCase();}
@@ -90,7 +123,9 @@
     const group=$("student-group").value.trim().replace(/\s+/g," ");
     if(student.length<2){$("student-name").setCustomValidity("Escribe tu nombre y apellido.");$("student-name").reportValidity();return;}
     $("student-name").setCustomValidity("");
-    session={id:folio(),student:student.slice(0,65),group:group.slice(0,35),startedAt:new Date().toISOString(),finishedAt:null,questions:newQuestions(),answers:[]};
+    const topic=$("game-topic").value;
+    if(topic!=="all"&&!TOPICS[topic]){alert("Selecciona un tema válido.");return;}
+    session={id:folio(),student:student.slice(0,65),group:group.slice(0,35),topic,startedAt:new Date().toISOString(),finishedAt:null,questions:newQuestions(topic),answers:[]};
     setJson(ACTIVE_KEY,session);
     showGame();
   }
@@ -98,6 +133,7 @@
     const q=session.questions[questionIndex],ans=session.answers[questionIndex];
     $("level-name").textContent=TOPICS[q.unit]?.label||"ENGLISH";
     $("question-counter").textContent="Pregunta "+(questionIndex+1)+" de "+session.questions.length;
+    $("question-progress").setAttribute("aria-valuemax",String(session.questions.length));
     $("question-progress").setAttribute("aria-valuenow",String(questionIndex+(showFeedback?1:0)));
     $("progress-fill").style.width=String((questionIndex+(showFeedback?1:0))/session.questions.length*100)+"%";
     $("question-emoji").textContent=q.emoji;
@@ -140,14 +176,17 @@
   function stats(data){
     const correct=data.answers.filter(a=>a.correct).length;
     const total=data.questions.length;
-    const percent=Math.round(correct/total*100);
-    const level=correct>=10?"¡Excelente trabajo!":correct>=7?"¡Vas por buen camino!":"¡Sigue practicando!";
-    return {correct,total,percent,level,points:correct*10};
+    const percent=total?Math.round(correct/total*100):0;
+    // Mantener la escala histórica de evaluaciones anteriores de 12 preguntas.
+    const excellent=total===12?correct>=10:percent>=80;
+    const progressing=total===12?correct>=7:percent>=60;
+    const level=excellent?"¡Excelente trabajo!":progressing?"¡Vas por buen camino!":"¡Sigue practicando!";
+    return {correct,total,percent,level,points:correct*10,maxPoints:total*10};
   }
   function renderResults(){
     const s=stats(session),name=escapeHtml(session.student);
-    const message=s.correct>=10?"¡Dominas muchas palabras! Sigue explorando.":s.correct>=7?"¡Gran esfuerzo! Repasa las que te faltaron.":"Vuelve al álbum, escucha y prueba de nuevo. ¡Tú puedes!";
-    $("results-panel").innerHTML='<span class="big" aria-hidden="true">'+(s.correct>=10?"🏆":s.correct>=7?"🌟":"💪")+'</span><h2>'+s.level+'</h2><p>'+name+', has terminado tus 12 retos. '+message+'</p><span class="score">'+s.percent+'<small>% de aciertos</small></span><div class="statgrid"><div><strong>'+s.correct+'/'+s.total+'</strong><small>Respuestas correctas</small></div><div><strong>'+s.points+'/120</strong><small>Puntos obtenidos</small></div><div><strong>'+(s.total-s.correct)+'</strong><small>Para repasar</small></div></div><div class="result-actions"><button class="btn purple" type="button" id="download-current">📄 Descargar mi PDF</button><button class="btn soft" type="button" id="restart-game">Volver a jugar ↻</button><button class="btn soft" type="button" data-nav="historial">Ver historial →</button></div><p class="result-id">Código del informe: '+escapeHtml(session.id)+'</p>';
+    const message=s.percent>=80?"¡Dominas muchas palabras! Sigue explorando.":s.percent>=60?"¡Gran esfuerzo! Repasa las que te faltaron.":"Vuelve al álbum, escucha y prueba de nuevo. ¡Tú puedes!";
+    $("results-panel").innerHTML='<span class="big" aria-hidden="true">'+(s.percent>=80?"🏆":s.percent>=60?"🌟":"💪")+'</span><h2>'+s.level+'</h2><p>'+name+', completaste '+s.total+' preguntas de '+escapeHtml(topicName(session))+'. '+message+'</p><span class="score">'+s.percent+'<small>% de aciertos</small></span><div class="statgrid"><div><strong>'+s.correct+'/'+s.total+'</strong><small>Respuestas correctas</small></div><div><strong>'+s.points+'/'+s.maxPoints+'</strong><small>Puntos obtenidos</small></div><div><strong>'+(s.total-s.correct)+'</strong><small>Para repasar</small></div></div><div class="result-actions"><button class="btn purple" type="button" id="download-current">📄 Descargar mi PDF</button><button class="btn soft" type="button" id="restart-game">Volver a jugar ↻</button><button class="btn soft" type="button" data-nav="historial">Ver historial →</button></div><p class="result-id">Código del informe: '+escapeHtml(session.id)+'</p>';
   }
   function restartGame(){
     if(session&&!session.finishedAt&&!confirm("¿Quieres abandonar esta partida y empezar otra?"))return;
@@ -158,8 +197,8 @@
   function renderHistory(){
     const target=$("history-content");
     if(!history.length){target.innerHTML='<div class="empty"><span>🗂️</span>Aún no hay evaluaciones finalizadas en este dispositivo.<br>Completa un juego para guardar un resultado.</div>';return;}
-    target.innerHTML='<div class="tablewrap"><table><thead><tr><th>Estudiante</th><th>Grupo</th><th>Fecha</th><th>Aciertos</th><th>Informe</th></tr></thead><tbody>'+
-      history.map(x=>{const s=stats(x);return '<tr><td>'+escapeHtml(x.student)+'</td><td>'+escapeHtml(x.group||"3.º")+'</td><td>'+escapeHtml(niceDate(x.finishedAt))+'</td><td>'+s.correct+'/'+s.total+' ('+s.percent+'%)</td><td><button type="button" data-report="'+escapeHtml(x.id)+'">📄 PDF</button></td></tr>';}).join("")+'</tbody></table></div>';
+    target.innerHTML='<div class="tablewrap"><table><thead><tr><th>Estudiante</th><th>Tema</th><th>Grupo</th><th>Fecha</th><th>Aciertos</th><th>Informe</th></tr></thead><tbody>'+
+      history.map(x=>{const s=stats(x);return '<tr><td>'+escapeHtml(x.student)+'</td><td>'+escapeHtml(topicName(x))+'</td><td>'+escapeHtml(x.group||"3.º")+'</td><td>'+escapeHtml(niceDate(x.finishedAt))+'</td><td>'+s.correct+'/'+s.total+' ('+s.percent+'%)</td><td><button type="button" data-report="'+escapeHtml(x.id)+'">📄 PDF</button></td></tr>';}).join("")+'</tbody></table></div>';
   }
   function clearHistory(){
     if(!history.length)return;
@@ -202,29 +241,37 @@
     write(0,"Grupo:",40,232,10,true,gray);write(0,String(data.group||"3.er grado").slice(0,55),130,230,11,false,blue);
     write(0,"Finalizado:",40,259,10,true,gray);write(0,niceDate(data.finishedAt),130,257,11,false,blue);
     write(0,"Folio:",40,286,10,true,gray);write(0,data.id,130,284,10,false,blue);
+    write(0,"Tema:",40,313,10,true,gray);write(0,topicName(data),130,311,11,true,blue);
     rect(0,40,330,515,130,pale);
     write(0,"RESULTADO GENERAL",58,347,12,true,purple);
     write(0,String(s.percent)+"%",58,376,41,true,purple);
     write(0,s.level,200,383,16,true,blue);
     write(0,s.correct+" de "+s.total+" respuestas correctas",200,412,12,false,gray);
-    write(0,s.points+" de 120 puntos",200,432,11,false,gray);
+    write(0,s.points+" de "+s.maxPoints+" puntos",200,432,11,false,gray);
     write(0,"DESEMPEÑO POR TEMA",40,486,12,true,purple);
-    let y=523;
-    for(const [unit,t] of Object.entries(TOPICS)){
+    let y=516;
+    for(const unit of [...new Set(data.questions.map(q=>q.unit))]){
+      const t=TOPICS[unit]||{name:"Otros"};
       const indices=data.questions.map((q,i)=>q.unit===unit?i:-1).filter(i=>i>=0);
       const hits=indices.filter(i=>data.answers[i]?.correct).length;
-      write(0,t.name,45,y,12,true,blue);write(0,hits+" / "+indices.length,455,y,12,true,blue);rule(0,45,y+26,550);y+=48;
+      write(0,t.name,45,y,12,true,blue);write(0,hits+" / "+indices.length,455,y,12,true,blue);rule(0,45,y+26,550);y+=42;
     }
     rect(0,40,688,515,83,[.99,.97,.91]);
     write(0,"Criterio orientativo:",55,700,11,true,blue);
-    write(0,"10 a 12 aciertos: Excelente  |  7 a 9: En progreso",55,723,10,false,gray);
-    write(0,"0 a 6 aciertos: Requiere refuerzo",55,741,10,false,gray);
+    if(s.total===12){
+      write(0,"10-12 aciertos: Excelente | 7-9: En progreso",55,723,10,false,gray);
+      write(0,"0-6 aciertos: Requiere refuerzo",55,741,10,false,gray);
+    }else{
+      write(0,"8-10 aciertos: Excelente | 6-7: En progreso",55,723,10,false,gray);
+      write(0,"0-5 aciertos: Requiere refuerzo",55,741,10,false,gray);
+    }
     footer(0);
     rect(1,0,0,W,106,purple);
     write(1,"WORD EXPLORERS",40,25,11,true,white);
     write(1,"DETALLE DE RESPUESTAS",40,49,21,true,white);
     write(1,"Estudiante: "+String(data.student||"").slice(0,55),40,120,11,true,blue);
     write(1,"Folio: "+data.id,40,140,9,false,gray);
+    write(1,"Tema: "+topicName(data),340,140,10,true,purple);
     rule(1,40,162,555);
     data.questions.forEach((q,i)=>{
       const ans=data.answers[i]||{selected:"Sin respuesta",correct:false};
@@ -234,7 +281,7 @@
       write(1,"Marcada: "+ans.selected+"     Correcta: "+q.en,65,top+23,10,false,gray);
       write(1,ans.correct?"BIEN":"REVISAR",485,top+8,9,true,ans.correct?green:red);
     });
-    write(1,"Puntaje final: "+s.correct+"/"+s.total+"   |   "+s.percent+"%   |   "+s.points+"/120 puntos",40,774,10,true,purple);
+    write(1,"Puntaje final: "+s.correct+"/"+s.total+"   |   "+s.percent+"%   |   "+s.points+"/"+s.maxPoints+" puntos",40,774,10,true,purple);
     footer(1);
     const objects=[];
     objects[1]="<< /Type /Catalog /Pages 2 0 R >>";
